@@ -1,4 +1,12 @@
+![](./screenshots/architecture.png)
+
+
 API for Compound, defi lending protocol https://compound.finance/
+
+![](./screenshots/compound1.png)
+
+![](./screenshots/compound2.png)
+
 
 
 Testing
@@ -17,3 +25,5 @@ https://vanity-eth.tk/
 Web3 contract instance (need ABI and address of smart contract)
 
 https://compound.finance/docs#networks 
+
+![](./screenshots/compound_docs.png)
