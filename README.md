@@ -9,7 +9,7 @@ API for Compound, defi lending protocol https://compound.finance/
 
 
 
-Testing
+### Testing
 
 `npm start`
 
@@ -22,7 +22,7 @@ Testing
 https://vanity-eth.tk/
 
 
-Web3 contract instance (need ABI and address of smart contract)
+### Web3 contract instance (need ABI and address of smart contract)
 
 https://compound.finance/docs#networks 
 

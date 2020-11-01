@@ -121,7 +121,7 @@ router.post('/mint/:cToken/:amount', async (ctx, next) => {
 });
 
 //endpoint 4 - redeem cToken
-router.post('/redeem/:cToken/:amount', async (req, res) => {
+router.post('/redeem/:cToken/:amount', async (ctx, next) => {
   const cToken = cTokens[ctx.params.cToken];
   if(typeof cToken === 'undefined') {
     ctx.status = 400;
