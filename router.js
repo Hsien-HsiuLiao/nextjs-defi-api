@@ -20,6 +20,7 @@ const cTokens = {
 
 //endpoint 1 - Token balance
 router.get('/tokenBalance/:cToken/:address', async (ctx, next) => {
+  //check if cToken exists
   const cToken = cTokens[ctx.params.cToken];
   if(typeof cToken === 'undefined') {
     ctx.status = 400;
@@ -48,7 +49,7 @@ router.get('/tokenBalance/:cToken/:address', async (ctx, next) => {
   }
 });
 
-//endpoint 1 - cToken balance
+//endpoint 2 - cToken balance
 router.get('/cTokenBalance/:cToken/:address', async (ctx, next) => {
   const cToken = cTokens[ctx.params.cToken];
   if(typeof cToken === 'undefined') {
@@ -96,13 +97,14 @@ router.post('/mint/:cToken/:amount', async (ctx, next) => {
     config.ERC20Abi,
     tokenAddress
   );
+  //approve cToken to spend our token
   await token
     .methods
     .approve(cToken.options.address, ctx.params.amount)
     .send({ from: adminAddress });
 
   try {
-    const cTokenBalance = await cToken
+    await cToken
       .methods
       .mint(ctx.params.amount)
       .send({ from: adminAddress });
@@ -132,7 +134,7 @@ router.post('/redeem/:cToken/:amount', async (ctx, next) => {
   }
 
   try {
-    const cTokenBalance = await cToken
+    await cToken
       .methods
       .redeem(ctx.params.amount)
       .send({ from: adminAddress });
