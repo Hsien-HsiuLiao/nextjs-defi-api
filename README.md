@@ -5,7 +5,7 @@ REST API to interact with a DeFi protocol, built with Node.js
 4 endpoints:
 1. get token balance
 2. get cToken balance
-3. mint cToekn
+3. mint cToken
 4. redeem cToken
 
 ![](./screenshots/architecture.png)
