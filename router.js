@@ -4,6 +4,7 @@ const Web3 = require('web3');
 const config = require('./config.json');
 
 const web3 = new Web3(process.env.INFURA_URL);
+// https://web3js.readthedocs.io/en/v1.3.4/web3-eth-accounts.html#wallet-add
 web3.eth.accounts.wallet.add(process.env.PRIVATE_KEY);
 const adminAddress = web3.eth.accounts.wallet[0].address;
 
