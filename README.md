@@ -50,4 +50,6 @@ add other endpoints for functions from Compound's smart contact
 
 add endpoints for other DeFi protocols (UniSwap, MakerDAO) https://defipulse.com/
 
+https://compound.finance/docs
+
 https://medium.com/compound-finance/compound-ethereum-api-with-infura-1f5c555fd4a2
