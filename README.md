@@ -21,6 +21,14 @@ API for Compound, defi lending protocol https://compound.finance/
 
 ### Testing on local machine
 
+create .env in root directory
+
+login to infura, get INFURA_URL
+
+get test PRIVATE_KEY
+
+`npm install`
+
 `npm start`
 
 `curl http://localhost:3000/tokenBalance/cDai/0x0d0289e9f3eae696fa38e86fc4456228dc1792a7`
