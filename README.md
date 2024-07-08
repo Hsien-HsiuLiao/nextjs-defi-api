@@ -25,7 +25,10 @@ create .env in root directory
 
 login to infura, get INFURA_URL
 
-get test PRIVATE_KEY
+get test PRIVATE_KEY https://vanity-eth.tk/
+
+
+`nvm install 16.15.1`
 
 `npm install`
 
@@ -35,7 +38,6 @@ get test PRIVATE_KEY
 
 `curl http://localhost:3000/cTokenBalance/cDai/0x0d0289e9f3eae696fa38e86fc4456228dc1792a7`
 
-https://vanity-eth.tk/
 
 
 ### Web3 contract instance (need ABI and address of smart contract)
