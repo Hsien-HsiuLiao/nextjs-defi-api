@@ -12,8 +12,8 @@
   "dependencies": {
     "@koa/router": "^9.4.0",
     "dotenv": "^8.2.0",
-    "koa": "^2.13.0",
-    "web3": "^4.16.0"
+    "ethers": "^6.13.5",
+    "koa": "^2.13.0"
   },
   "engines": {
     "node": "12.x"
