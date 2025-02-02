@@ -81,6 +81,11 @@ router.get('/cTokenBalance/:cToken/:address', async (ctx, next) => {
 });
 
 //endpoint 3 - mint cToken
+//if you want to invest your token (DAI for example) into the Compound ecosystem, 
+//when sending your DAI to cDAI contract, this is minting cDAI, you will get cDAI in 
+//exchange for your DAI tokens. This will be an ethereum transaction and must be
+//signed with a private key
+//post endpoint for modifying blockchain data
 router.post('/mint/:cToken/:amount', async (ctx, next) => {
   const cToken = cTokens[ctx.params.cToken];
   if(typeof cToken === 'undefined') {
