@@ -1,6 +1,9 @@
 const Router = require('@koa/router');
 const router = new Router();
-const Web3 = require('web3');
+//v1
+//const Web3 = require('web3');
+//v4
+const { Web3 } = require('web3');
 const config = require('./config.json');
 
 const web3 = new Web3(process.env.INFURA_URL);
@@ -20,6 +23,17 @@ const cTokens = {
 };
 
 //endpoint 1 - Token balance
+//TypeError: Do not know how to serialize a BigInt
+//at JSON.stringify 
+//Convert to String
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};
+//Convert to Number: but this can lead to loss of precision for large BigInt values that exceed Number.MAX_SAFE_INTEGER.
+/* BigInt.prototype.toJSON = function () {
+    return Number(this);
+}; */
+
 router.get('/tokenBalance/:cToken/:address', async (ctx, next) => {
   //check if cToken exists
   const cToken = cTokens[ctx.params.cToken];
