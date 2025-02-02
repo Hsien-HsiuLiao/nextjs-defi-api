@@ -21,9 +21,14 @@ API for Compound, defi lending protocol https://compound.finance/
 
 ### Testing on local machine
 
-create .env in root directory
+create .env in root directory, example
 
-login to infura, get INFURA_URL
+```
+INFURA_URL=
+PRIVATE_KEY=
+```
+
+login to infura, get INFURA_URL, use ethereum mainnet
 
 get test PRIVATE_KEY https://vanity-eth.tk/
 
@@ -34,9 +39,24 @@ get test PRIVATE_KEY https://vanity-eth.tk/
 
 `npm start`
 
-`curl http://localhost:3000/tokenBalance/cDai/0x0d0289e9f3eae696fa38e86fc4456228dc1792a7`
+this address has some cDAI/DAI 0x0d0289e9f3eae696fa38e86fc4456228dc1792a7 , you can find other addresses like this on etherscan by
+- searching for the contract of cDAI
+- search last transactions, inspect sending address for DAI/cDAI
 
-`curl http://localhost:3000/cTokenBalance/cDai/0x0d0289e9f3eae696fa38e86fc4456228dc1792a7`
+
+`curl http://localhost:3001/tokenBalance/cDai/0x0d0289e9f3eae696fa38e86fc4456228dc1792a7`
+
+should see response like
+```
+{"cToken":"cDai","address":"0x0d0289e9f3eae696fa38e86fc4456228dc1792a7","tokenBalance":"20067039275930298021"}
+```
+
+`curl http://localhost:3001/cTokenBalance/cDai/0x0d0289e9f3eae696fa38e86fc4456228dc1792a7`
+
+should see response like
+```
+{"cToken":"cDai","address":"0x0d0289e9f3eae696fa38e86fc4456228dc1792a7","cTokenBalance":"82611382312"}
+```
 
 
 
@@ -44,11 +64,15 @@ get test PRIVATE_KEY https://vanity-eth.tk/
 
 https://compound.finance/docs#networks 
 
+https://docs.compound.finance/v2/#networks
+
 ![](./screenshots/compound_docs.png)
 
 config.json has cBatAddress, cDaiAddress, cTokenABI, ERC20ABI
 
-### Deployed to Heroku
+### Deployed to ~~~Heroku~~~
+
+heroku no longer free, will use AWS Lambda
 
 https://pure-ridge-83476.herokuapp.com/
 
