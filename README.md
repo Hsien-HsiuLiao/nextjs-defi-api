@@ -30,7 +30,7 @@ PRIVATE_KEY=
 
 login to infura, get INFURA_URL, use ethereum mainnet
 
-get test PRIVATE_KEY https://vanity-eth.tk/
+get test PRIVATE_KEY https://vanity-eth.tk/ and prepend with 0x in .env
 
 
 `nvm install 16.15.1`
