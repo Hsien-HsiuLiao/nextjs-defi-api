@@ -1,25 +1,38 @@
 const Router = require('@koa/router');
 const router = new Router();
-//v1
-//const Web3 = require('web3');
-//v4
-const { Web3 } = require('web3');
 const config = require('./config.json');
 
-const web3 = new Web3(process.env.INFURA_URL);
+//web3 v4
+/* const { Web3 } = require('web3');
+const web3 = new Web3(process.env.INFURA_URL); */
+var ethers = require('ethers');
+const url = process.env.INFURA_URL;
+const provider = new ethers.JsonRpcProvider(url);
+
+
+
 // https://web3js.readthedocs.io/en/v1.3.4/web3-eth-accounts.html#wallet-add
-web3.eth.accounts.wallet.add(process.env.PRIVATE_KEY);
-const adminAddress = web3.eth.accounts.wallet[0].address;
+//web3.eth.accounts.wallet.add(process.env.PRIVATE_KEY);
+const wallet = new ethers.Wallet(process.env.PRIVATE_KEY);
+//const adminAddress = web3.eth.accounts.wallet[0].address;
+const adminAddress = wallet.address;
+
+const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
 const cTokens = {
-  cBat: new web3.eth.Contract(
-    config.cTokenAbi,
-    config.cBatAddress,
-  ),
-  cDai: new web3.eth.Contract(
+  cBat: new ethers.Contract(config.cBatAddress, config.cTokenAbi, signer/*provider */),
+  /* web3.eth.Contract(
+   config.cTokenAbi,
+   config.cBatAddress,
+ ) */
+  //You can also use an ENS name for the contract address
+  //const daiAddress = "dai.tokens.ethers.eth";
+
+  cDai: new /* web3.eth.Contract(
     config.cTokenAbi,
     config.cDaiAddress,
-  )
+  ) */
+    ethers.Contract(config.cDaiAddress, config.cTokenAbi, signer/* provider */)
 };
 
 //endpoint 1 - Token balance
@@ -37,7 +50,7 @@ BigInt.prototype.toJSON = function () {
 router.get('/tokenBalance/:cToken/:address', async (ctx, next) => {
   //check if cToken exists
   const cToken = cTokens[ctx.params.cToken];
-  if(typeof cToken === 'undefined') {
+  if (typeof cToken === 'undefined') {
     ctx.status = 400;
     ctx.body = {
       error: `cToken ${ctx.params.cToken} does not exist`
@@ -46,16 +59,16 @@ router.get('/tokenBalance/:cToken/:address', async (ctx, next) => {
   }
 
   try {
-    const tokenBalance = await cToken
-      .methods
-      .balanceOfUnderlying(ctx.params.address)
-      .call();
+    const tokenBalance = await cToken.balanceOfUnderlying(ctx.params.address);
+    /* .methods
+    .balanceOfUnderlying(ctx.params.address)
+    .call(); */
     ctx.body = {
       cToken: ctx.params.cToken,
       address: ctx.params.address,
       tokenBalance
     };
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     ctx.status = 500;
     ctx.body = {
@@ -67,7 +80,7 @@ router.get('/tokenBalance/:cToken/:address', async (ctx, next) => {
 //endpoint 2 - cToken balance
 router.get('/cTokenBalance/:cToken/:address', async (ctx, next) => {
   const cToken = cTokens[ctx.params.cToken];
-  if(typeof cToken === 'undefined') {
+  if (typeof cToken === 'undefined') {
     ctx.status = 400;
     ctx.body = {
       error: `cToken ${ctx.params.cToken} does not exist`
@@ -85,7 +98,7 @@ router.get('/cTokenBalance/:cToken/:address', async (ctx, next) => {
       address: ctx.params.address,
       cTokenBalance
     };
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     ctx.status = 500;
     ctx.body = {
@@ -102,7 +115,7 @@ router.get('/cTokenBalance/:cToken/:address', async (ctx, next) => {
 //post endpoint for modifying blockchain data
 router.post('/mint/:cToken/:amount', async (ctx, next) => {
   const cToken = cTokens[ctx.params.cToken];
-  if(typeof cToken === 'undefined') {
+  if (typeof cToken === 'undefined') {
     ctx.status = 400;
     ctx.body = {
       error: `cToken ${ctx.params.cToken} does not exist`
@@ -130,10 +143,10 @@ router.post('/mint/:cToken/:amount', async (ctx, next) => {
       .send({ from: adminAddress });
     ctx.body = {
       cToken: ctx.params.cToken,
-      address: adminAddress, 
+      address: adminAddress,
       amountMinted: ctx.params.amount
     };
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     ctx.status = 500;
     ctx.body = {
@@ -145,7 +158,7 @@ router.post('/mint/:cToken/:amount', async (ctx, next) => {
 //endpoint 4 - redeem cToken
 router.post('/redeem/:cToken/:amount', async (ctx, next) => {
   const cToken = cTokens[ctx.params.cToken];
-  if(typeof cToken === 'undefined') {
+  if (typeof cToken === 'undefined') {
     ctx.status = 400;
     ctx.body = {
       error: `cToken ${ctx.params.cToken} does not exist`
@@ -160,10 +173,10 @@ router.post('/redeem/:cToken/:amount', async (ctx, next) => {
       .send({ from: adminAddress });
     ctx.body = {
       cToken: ctx.params.cToken,
-      address: adminAddress, 
+      address: adminAddress,
       amountRedeemed: ctx.params.amount
     };
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     ctx.status = 500;
     ctx.body = {
